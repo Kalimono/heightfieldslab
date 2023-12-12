@@ -1,0 +1,9 @@
+# CMake generation dependency list for this directory.
+D:/TDA362new/tda362-labs/VSUserTemplate.user
+D:/TDA362new/tda362-labs/external/embree2/embree-config-version.cmake
+D:/TDA362new/tda362-labs/external/embree2/embree-config.cmake
+D:/TDA362new/tda362-labs/pathtracer/CMakeLists.txt
+D:/cmake/share/cmake-3.28/Modules/CMakeParseImplicitLinkInfo.cmake
+D:/cmake/share/cmake-3.28/Modules/FindOpenMP.cmake
+D:/cmake/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake
+D:/cmake/share/cmake-3.28/Modules/FindPackageMessage.cmake

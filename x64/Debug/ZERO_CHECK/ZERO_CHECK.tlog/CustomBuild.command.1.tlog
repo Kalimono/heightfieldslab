@@ -1,0 +1,10 @@
+^D:\TDA362NEW\TDA362-LABS\CMAKEFILES\2CFF0C3A893E9603C20274F267ADF2DB\GENERATE.STAMP.RULE
+setlocal
+D:\cmake\bin\cmake.exe -SD:/TDA362new/tda362-labs -BD:/TDA362new/tda362-labs --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/TDA362new/tda362-labs/computer-graphics-labs.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

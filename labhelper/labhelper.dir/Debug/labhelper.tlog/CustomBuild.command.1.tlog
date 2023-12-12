@@ -1,0 +1,10 @@
+^D:\TDA362NEW\TDA362-LABS\LABHELPER\CMAKELISTS.TXT
+setlocal
+D:\cmake\bin\cmake.exe -SD:/TDA362new/tda362-labs -BD:/TDA362new/tda362-labs --check-stamp-file D:/TDA362new/tda362-labs/labhelper/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

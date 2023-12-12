@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\TDA362new\tda362-labs\project\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\TDA362new\tda362-labs\project\fbo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\TDA362new\tda362-labs\project\heightfield.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\TDA362new\tda362-labs\project\ParticleSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\TDA362new\tda362-labs\project\fbo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\TDA362new\tda362-labs\project\heightfield.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\TDA362new\tda362-labs\project\ParticleSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\TDA362new\tda362-labs\project\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\TDA362new\tda362-labs\project\background.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\TDA362new\tda362-labs\project\fullscreenQuad.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\TDA362new\tda362-labs\project\heightfield.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\TDA362new\tda362-labs\project\heightfield.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\TDA362new\tda362-labs\project\irradianceMap.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\TDA362new\tda362-labs\project\particle.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\TDA362new\tda362-labs\project\particle.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\TDA362new\tda362-labs\project\reflectivityMap.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\TDA362new\tda362-labs\project\shading.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\TDA362new\tda362-labs\project\shading.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\TDA362new\tda362-labs\project\simple.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\TDA362new\tda362-labs\project\simple.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\TDA362new\tda362-labs\project\ssaoInput.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\TDA362new\tda362-labs\project\ssaoInput.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\TDA362new\tda362-labs\project\ssaoOutput.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="D:\TDA362new\tda362-labs\project\ssaoOutput.vert">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{0CE5D42E-38A8-3186-8E81-21D9E2418B80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{EFB0D3B9-88A0-37DC-AF7F-5A95D5DB9C8B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{5003FD66-FEE3-325A-911B-6826F1AFC99F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
