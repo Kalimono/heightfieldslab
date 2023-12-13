@@ -92,6 +92,8 @@ mat4 roomModelMatrix;
 mat4 landingPadModelMatrix;
 mat4 fighterModelMatrix;
 
+mat4 heightFieldModelMatrix;
+
 float shipSpeed = 50;
 
 
@@ -136,7 +138,11 @@ void initialize()
 	///////////////////////////////////////////////////////////////////////
 	// Load Shaders
 	///////////////////////////////////////////////////////////////////////
-	loadShaders(false);
+	backgroundProgram = labhelper::loadShaderProgram("../lab6-shadowmaps/background.vert", "../lab6-shadowmaps/background.frag");
+	shaderProgram = labhelper::loadShaderProgram("../lab6-shadowmaps/shading.vert", "../lab6-shadowmaps/shading.frag");
+	simpleShaderProgram = labhelper::loadShaderProgram("../lab6-shadowmaps/simple.vert", "../lab6-shadowmaps/simple.frag");
+
+	heightFieldShaderProgram = labhelper::loadShaderProgram("../project/heightfield.vert", "../project/heightfield.frag");
 
 	///////////////////////////////////////////////////////////////////////
 	// Load models and set up model matrices
@@ -147,6 +153,8 @@ void initialize()
 	roomModelMatrix = mat4(1.0f);
 	fighterModelMatrix = translate(15.0f * worldUp);
 	landingPadModelMatrix = mat4(1.0f);
+
+	heightFieldModelMatrix = scale(vec3(10.0f, -12.5f, 10.0f)*.1f);
 
 	///////////////////////////////////////////////////////////////////////
 	// Load environment map
@@ -166,13 +174,17 @@ void initialize()
 	///////////////////////////////////////////////////////////////////////
 	// Generate height field mesh
 	///////////////////////////////////////////////////////////////////////
+	heightfield.loadHeightField("../scenes/nlsFinland/L3123F.png");
+	heightfield.loadDiffuseTexture("../scenes/nlsFinland/L3123F_downscaled.jpg");
+	heightfield.setShaderProgram(heightFieldShaderProgram); 
+
 	heightfield.generateMesh(1024, 10.0f); // Adjust gridSize and spacing as needed
 
 	///////////////////////////////////////////////////////////////////////
 	// Set the shader program for the height field
 	///////////////////////////////////////////////////////////////////////
 	
-	heightfield.setShaderProgram(shaderProgram);
+	
 }
 
 
@@ -198,6 +210,53 @@ void drawBackground(const mat4& viewMatrix, const mat4& projectionMatrix)
 	labhelper::drawFullScreenQuad();
 }
 
+GLfloat terrain_reflectivity = 1.0f;
+GLfloat terrain_metalness = 1.0f;
+GLfloat terrain_fresnel = 1.0f;
+GLfloat terrain_shininess = 1.0f;
+GLfloat terrain_emission = 1.0f;
+GLfloat displaceNormal = 0;
+float innerSpotlightAngle = 17.5f;
+float outerSpotlightAngle = 22.5f;
+
+
+void drawTerrain(const mat4& viewMatrix, const mat4& projectionMatrix, const mat4& lightViewMatrix, const mat4& lightProjectionMatrix)
+{
+	glUseProgram(heightFieldShaderProgram);
+	//shaderProgram, viewMatrix, projMatrix, lightViewMatrix, lightProjMatrix
+	//vec4 viewSpaceLightPosition = viewMatrix * vec4(lightPosition, 1.0f);
+	//labhelper::setUniformSlow(heightFieldShaderProgram, "point_light_color", point_light_color);
+	//labhelper::setUniformSlow(heightFieldShaderProgram, "point_light_intensity_multiplier", point_light_intensity_multiplier);
+	//labhelper::setUniformSlow(heightFieldShaderProgram, "viewSpaceLightPosition", vec3(viewSpaceLightPosition));
+	//labhelper::setUniformSlow(heightFieldShaderProgram, "viewSpaceLightDir", normalize(vec3(viewMatrix * vec4(-lightPosition, 0.0f))));
+	//labhelper::setUniformSlow(heightFieldShaderProgram, "spotOuterAngle", std::cos(radians(outerSpotlightAngle)));
+	//labhelper::setUniformSlow(heightFieldShaderProgram, "spotInnerAngle", std::cos(radians(innerSpotlightAngle)));
+
+	////shadowMap
+	//mat4 lightMatrix = translate(mat4(1.0f), vec3(0.5f, 0.5f, 0.5f)) * scale(mat4(1.0f), vec3(0.5f, 0.5f, 0.5f)) * lightProjectionMatrix * lightViewMatrix * inverse(viewMatrix);
+	//labhelper::setUniformSlow(heightFieldShaderProgram, "lightMatrix", lightMatrix);
+
+	//// Environment
+	//labhelper::setUniformSlow(heightFieldShaderProgram, "environment_multiplier", environment_multiplier);
+
+	//// camera
+	//labhelper::setUniformSlow(heightFieldShaderProgram, "viewInverse", inverse(viewMatrix));
+
+	labhelper::setUniformSlow(heightFieldShaderProgram, "modelViewProjectionMatrix", projectionMatrix * viewMatrix * heightFieldModelMatrix);
+	labhelper::setUniformSlow(heightFieldShaderProgram, "modelViewMatrix", viewMatrix * heightFieldModelMatrix);
+	labhelper::setUniformSlow(heightFieldShaderProgram, "normalMatrix", inverse(transpose(viewMatrix * heightFieldModelMatrix)));
+	
+
+	//labhelper::setUniformSlow(heightFieldShaderProgram, "material_reflectivity", terrain_reflectivity);
+	//labhelper::setUniformSlow(heightFieldShaderProgram, "material_metalness", terrain_metalness);
+	//labhelper::setUniformSlow(heightFieldShaderProgram, "material_fresnel", terrain_fresnel);
+	//labhelper::setUniformSlow(heightFieldShaderProgram, "material_shininess", terrain_shininess);
+	//labhelper::setUniformSlow(heightFieldShaderProgram, "material_emission", terrain_emission);
+	//labhelper::setUniformSlow(heightFieldShaderProgram, "displaceNormal", displaceNormal);
+
+	heightfield.submitTriangles();
+	glUseProgram(0);
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 /// This function is used to draw the main objects on the scene
@@ -304,11 +363,11 @@ void display(void)
     // Bind the VAO for the heightfield before submitting triangles
     //glBindVertexArray(heightfield.getVAO());
     
-    heightfield.submitTriangles();
+    //heightfield.submitTriangles();
 
     // Unbind the VAO for the heightfield
     //glBindVertexArray(0);
-
+	drawTerrain(viewMatrix, projMatrix, lightViewMatrix, lightProjMatrix);
     drawScene(shaderProgram, viewMatrix, projMatrix, lightViewMatrix, lightProjMatrix);
     debugDrawLight(viewMatrix, projMatrix, vec3(lightPosition));
 

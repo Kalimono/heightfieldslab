@@ -198,7 +198,7 @@ void HeightField::generateMesh(int gridSize, float spacing)
 }
 
 
-void HeightField::submitTriangles(void)
+void HeightField::submitTriangles()
 {
     if (m_vao == UINT32_MAX)
     {
@@ -207,14 +207,26 @@ void HeightField::submitTriangles(void)
     }
 
     glUseProgram(shaderProgram);
-    glDisable(GL_CULL_FACE);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    
     glBindVertexArray(m_vao);
-    glDrawArrays(GL_TRIANGLES, 0, m_numIndices);
-    glBindVertexArray(0);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+    // Set uniform values if needed
+    glUniform1i(glGetUniformLocation(shaderProgram, "hf"), 0);  // Texture unit 0
+    glUniform1f(glGetUniformLocation(shaderProgram, "displaceNormal"), 3);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, m_texid_hf);
+
+    // Activate other texture units if needed
+    // glActiveTexture(GL_TEXTURE1);
+    // glBindTexture(GL_TEXTURE_2D, m_texid_diffuse);
+
     glEnable(GL_CULL_FACE);
-    
-    
+    glFrontFace(GL_CCW);  // Adjust this based on your winding order
+
+    // Use glDrawElements instead of glDrawArrays
+    glDrawElements(GL_TRIANGLES, m_numIndices, GL_UNSIGNED_INT, 0);
+
+    glDisable(GL_CULL_FACE);
+    glBindVertexArray(0);
 }
+
